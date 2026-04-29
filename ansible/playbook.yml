@@ -1,0 +1,5 @@
+- name: Install container tools and create directory
+  become: true
+  hosts: all
+  roles:
+    - common

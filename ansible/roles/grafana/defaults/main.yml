@@ -1,0 +1,8 @@
+grafana_port: 80
+grafana_admin_user: admin
+grafana_admin_password: password
+grafana_admin_email: admin@example.invalid
+grafana_plugins: victoriametrics-metrics-datasource
+grafana_plugins_pre: alexanderzobnin-zabbix-app,knightss27-weathermap-panel,vaduga-mapgl-panel
+#grafana_feature_toggles_enable: sqlExpressions #CVE-2026-27876
+grafana_renderer_token: renderertoken

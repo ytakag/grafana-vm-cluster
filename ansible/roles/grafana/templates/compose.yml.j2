@@ -1,0 +1,30 @@
+services:
+  grafana:
+    image: "{{ (container_registry_repository | default('')) ~ '/' if container_registry_repository | default('') else '' }}grafana/grafana-enterprise:latest"
+    container_name: grafana
+    ports:
+      - {{ grafana_port }}:3000
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./config/provisioning:/etc/grafana/provisioning
+    environment:
+      GF_DEFAULT_INSTANCE_NAME: grafana
+      GF_SECURITY_ADMIN_USER: {{ grafana_admin_user }}
+      GF_SECURITY_ADMIN_PASSWORD: {{ grafana_admin_password }}
+      GF_SECURITY_ADMIN_EMAIL: {{ grafana_admin_email }}
+      GF_INSTALL_PLUGINS: {{ grafana_plugins }}
+      GF_PLUGINS_PREINSTALL: {{ grafana_plugins_pre }}
+      GF_FEATURE_TOGGLES_ENABLE: {{ grafana_feature_toggles_enable }}
+      GF_RENDERING_SERVER_URL: http://renderer:8081/render
+      GF_RENDERING_CALLBACK_URL: http://grafana:{{ grafana_port }}/
+      GF_RENDERING_RENDERER_TOKEN: {{ grafana_renderer_token }}
+    restart: always
+
+  renderer:
+    image: "{{ (container_registry_repository | default('')) ~ '/' if container_registry_repository | default('') else '' }}grafana/grafana-image-renderer:latest
+    container_name: renderer
+    ports:
+      - 8081:8081
+    environment:
+      AUTH_TOKEN: {{ grafana_renderer_token }}
+    restart: always

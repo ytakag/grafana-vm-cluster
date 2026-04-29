@@ -1,0 +1,31 @@
+- name: Configure ip unpriviledged port
+  ansible.posix.sysctl:
+    name: net.ipv4.ip_unpriviledged_port_start
+    value: "{{ [grafana_port] | min }}"
+    reload: true
+
+- name: Create directory
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/{{ working_dir }}/{{ item.path }}"
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: "0755"
+  with_filetree: templates
+  when: item.state == "directory"
+
+- name: Copy templates files
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ ansible_user_dir }}/{{ working_dir }}/{{ item.path |
+      regex_replace('\\.j2$', '') }}"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: "0644"
+  with_filetree: templates
+  when: item.state == "file"
+
+- name: Start podman compose
+  ansible.builtin.command:
+    cmd: podman compose up -d
+    chdir: "{{ ansible_user_dir }}/{{ working_dir }}"

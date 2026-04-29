@@ -1,0 +1,39 @@
+- name: Install packages
+  ansible.builtin.dnf:
+    name:
+      - container-tools
+      - podman-tui
+      - podman-compose
+      - podman-docker
+    state: present
+
+- name: Enable and start podman user services
+  become: false
+  ansible.builtin.systemd_service:
+    name: "{{ item }}"
+    scope: user
+    enabled: true
+    state: started
+  loop:
+    - podman.socket
+    - podman.service
+    - podman-restart.service
+
+- name: Check linger status for user
+  ansible.builtin.command:
+    cmd: "loginctl show-user {{ ansible_user }}"
+  register: linger_status
+  changed_when: false
+
+- name: Enable linger for user if not already enabled
+  ansible.builtin.command:
+    cmd: "loginctl enable-linger {{ ansible_user }}"
+  when: "'Linger=yes' not in linger_status.stdout"
+
+- name: Create working directory
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/{{ working_dir }}"
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: "0755"
