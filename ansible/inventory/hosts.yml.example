@@ -1,5 +1,62 @@
 all:
   hosts:
-    dns-server-1:
-      ansible_host: 10.0.0.53
+    grafana-1:
+      ansible_host: 10.0.0.1
+    grafana-2:
+      ansible_host: 10.0.0.2
+
+    vmauth-read-1:
+      ansible_host: 10.0.0.3
+    vmauth-read-2:
+      ansible_host: 10.0.0.4
+
+    vmselect-1:
+      ansible_host: 10.0.0.3
+    vmselect-2:
+      ansible_host: 10.0.0.4
+
+    vmauth-write-1:
+      ansible_host: 10.0.0.5
+    vmauth-write-2:
+      ansible_host: 10.0.0.6
+
+    vminsert-1:
+      ansible_host: 10.0.0.5
+    vminsert-2:
+      ansible_host: 10.0.0.6
+
+    vmagent-1:
+      ansible_host: 10.0.0.7
+    vmagent-2:
+      ansible_host: 10.0.0.8
+
+    vmstorage-1:
+      ansible_host: 10.0.0.9
+
   children:
+    grafana:
+      grafana-1:
+      grafana-2:
+
+    vmauth-read:
+      vmauth-read-1:
+      vmauth-read-2:
+
+    vmselect:
+      vmselect-1:
+      vmselect-2:
+
+    vmauth-write:
+      vmauth-write-1:
+      vmauth-write-2:
+
+    vminsert:
+      vminsert-1:
+      vminsert-2:
+
+    vmagent:
+      vmagent-1:
+      vmagent-2:
+
+    vmstorage:
+      vmstorage-1:
