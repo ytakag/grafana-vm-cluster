@@ -28,3 +28,7 @@ services:
     environment:
       AUTH_TOKEN: {{ grafana_renderer_token }}
     restart: always
+
+networks:
+  monitoring:
+    external: true

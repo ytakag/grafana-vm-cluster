@@ -25,6 +25,10 @@
   register: linger_status
   changed_when: false
 
+- name: Create  network
+  containers.podman.podman_network:
+    name: monitoring
+
 - name: Enable linger for user if not already enabled
   ansible.builtin.command:
     cmd: "loginctl enable-linger {{ ansible_user }}"
