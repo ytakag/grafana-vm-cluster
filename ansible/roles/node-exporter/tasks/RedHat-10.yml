@@ -1,0 +1,13 @@
+- name: Install packages
+  ansible.builtin.dnf:
+    name:
+      - node-exporter
+    state: present
+
+- name: Enable and start node-exporter services
+  ansible.builtin.systemd_service:
+    name: "{{ item }}"
+    enabled: true
+    state: started
+  loop:
+    - prometheus-node-exporter.service
