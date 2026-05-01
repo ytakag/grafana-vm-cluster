@@ -1,0 +1,15 @@
+services:
+  vmauth:
+    image: "{{ (container_registry_repository | default('')) ~ '/' if container_registry_repository | default('') else '' }}victoriametrics/vmauth:latest"
+    container_name: vmauth
+    ports:
+      - 8427:8427
+    volumes:
+      - ./config/auth.yml:/etc/auth.yml
+    command:
+      - "--auth.config=/etc/auth.yml"
+    restart: always
+
+networks:
+  monitoring:
+    external: true
