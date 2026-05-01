@@ -26,6 +26,7 @@
   when: item.state == "file"
 
 - name: Start podman compose
+  become: false
   ansible.builtin.command:
     cmd: podman compose up -d
     chdir: "{{ ansible_user_dir }}/{{ working_dir }}/grafana"
