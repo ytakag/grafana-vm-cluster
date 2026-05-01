@@ -6,7 +6,7 @@
 
 - name: Create directory
   ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/{{ working_dir }}/{{ item.path }}"
+    path: "{{ ansible_user_dir }}/{{ working_dir }}/{{ item.path }}/grafana"
     state: directory
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
@@ -17,7 +17,7 @@
 - name: Copy templates files
   ansible.builtin.template:
     src: "{{ item.src }}"
-    dest: "{{ ansible_user_dir }}/{{ working_dir }}/{{ item.path |
+    dest: "{{ ansible_user_dir }}/{{ working_dir }}/grafana/{{ item.path |
       regex_replace('\\.j2$', '') }}"
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
@@ -28,4 +28,4 @@
 - name: Start podman compose
   ansible.builtin.command:
     cmd: podman compose up -d
-    chdir: "{{ ansible_user_dir }}/{{ working_dir }}"
+    chdir: "{{ ansible_user_dir }}/{{ working_dir }}/grafana"
