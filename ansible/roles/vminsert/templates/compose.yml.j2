@@ -8,6 +8,9 @@ services:
 {% for host in groups['vmstorage'] %}
       - "--storageNode={{ host }}:8400"
 {% endfor %}
+{% for cmd in vminsert_command %}
+      - "{{ cmd }}"
+{% endfor %}
     restart: always
 
 networks:
