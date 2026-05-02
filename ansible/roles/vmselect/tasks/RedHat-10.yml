@@ -1,6 +1,6 @@
 - name: Create directory
   ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/{{ working_dir }}/{{ item.path }}/vmselect"
+    path: "{{ ansible_user_dir }}/{{ working_dir }}/vmselect/{{ item.path }}"
     state: directory
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"

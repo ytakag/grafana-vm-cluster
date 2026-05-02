@@ -6,7 +6,7 @@
 
 - name: Create directory
   ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/{{ working_dir }}/{{ item.path }}/grafana"
+    path: "{{ ansible_user_dir }}/{{ working_dir }}/grafana/{{ item.path }}"
     state: directory
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
