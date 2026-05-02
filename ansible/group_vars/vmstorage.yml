@@ -1,0 +1,3 @@
+vmstorage_command:
+  - "edup.minScrapeInterval=15s"
+  #- "--retentionPeriod=30d"

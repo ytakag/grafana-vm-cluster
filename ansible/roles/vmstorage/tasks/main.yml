@@ -1,0 +1,2 @@
+- name: Include version specific tasks
+  ansible.builtin.include_tasks: "{{ ansible_facts['distribution'] }}-{{ ansible_facts['distribution_major_version'] }}.yml"

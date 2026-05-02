@@ -1,0 +1,23 @@
+services:
+  vmstorage:
+    image: "{{ (container_registry_repository | default('')) ~ '/' if container_registry_repository | default('') else '' }}victoriametrics/vmstorage:latest"
+    container_name: vmstorage
+    ports:
+      - 8400:8400
+      - 8401:8401
+      - 8482:8482
+    volumes:
+      - vmstorage-data:/storage
+    command:
+      - "--storageDataPath=/storage"
+{% for cmd in vmstorage_command %}
+      - "{{ cmd }}"
+{% endfor %}
+    restart: always
+
+networks:
+  monitoring:
+    external: true
+
+volumes:
+  vmstorage-data:
