@@ -1,0 +1,15 @@
+services:
+  vminsert:
+    image: "{{ (container_registry_repository | default('')) ~ '/' if container_registry_repository | default('') else '' }}victoriametrics/vminsert:latest"
+    container_name: vminsert
+    ports:
+      - 8480:8480
+    command:
+{% for host in groups['vmstorage'] %}
+      - "--storageNode={{ host }}:8400"
+{% endfor %}
+    restart: always
+
+networks:
+  monitoring:
+    external: true
