@@ -1,0 +1,16 @@
+services:
+  vmselect:
+    image: "{{ (container_registry_repository | default('')) ~ '/' if container_registry_repository | default('') else '' }}victoriametrics/vmselect:latest"
+    container_name: vmselect
+    ports:
+      - 8481:8481
+    command:
+{% for host in groups['vmstorage'] %}
+      - "--storageNode={{ host }}:8401"
+{% endfor %}
+      #- "--vmalert.proxyURL=http://vmalert:8880"
+    restart: always
+
+networks:
+  monitoring:
+    external: true
