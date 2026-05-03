@@ -9,7 +9,6 @@ services:
     volumes:
       - vmstorage-data:/storage
     command:
-      - "--storageDataPath=/storage"
 {% for cmd in vmstorage_command %}
       - "{{ cmd }}"
 {% endfor %}

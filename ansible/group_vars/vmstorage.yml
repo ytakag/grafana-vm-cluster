@@ -1,3 +1,4 @@
 vmstorage_command:
+  - "-storageDataPath=/storage"
   - "-dedup.minScrapeInterval=15s"
-  #- "-retentionPeriod=30d"
+  - "-retentionPeriod=5y"
