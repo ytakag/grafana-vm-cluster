@@ -7,7 +7,9 @@ services:
     volumes:
       - ./config/auth.yml:/etc/auth.yml
     command:
-      - "--auth.config=/etc/auth.yml"
+{% for cmd in vmauth_command %}
+      - "{{ cmd }}"
+{% endfor %}
     restart: always
 
 networks:

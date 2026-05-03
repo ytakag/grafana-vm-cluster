@@ -8,10 +8,12 @@ services:
       - vmagent-data:/vmagentdata
       - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
     command:
-      - "--promscrape.config=/etc/prometheus/prometheus.yml"
+{% for cmd in vmagent_command %}
+      - "{{ cmd }}"
+{% endfor %}
 {% for host in groups['vmauth-write'] %}
 {% for path in vmagent_remote_write_path %}
-      - "--remoteWrite.url=http://{{ hostvars[host].ansible_host }}:8427{{ path }}"
+      - "-remoteWrite.url=http://{{ hostvars[host].ansible_host }}:8427{{ path }}"
 {% endfor %}
 {% endfor %}
     restart: always

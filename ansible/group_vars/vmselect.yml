@@ -1,0 +1,2 @@
+vmselect_command:
+  - "#-vmalert.proxyURL=http://vmalert:8880"

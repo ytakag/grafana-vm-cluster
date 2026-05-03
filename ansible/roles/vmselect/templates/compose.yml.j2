@@ -5,10 +5,12 @@ services:
     ports:
       - 8481:8481
     command:
-{% for host in groups['vmstorage'] %}
-      - "--storageNode={{ hostvars[host].ansible_host }}:8401"
+{% for cmd in vmselect_command %}
+      - "{{ cmd }}"
 {% endfor %}
-      #- "--vmalert.proxyURL=http://vmalert:8880"
+{% for host in groups['vmstorage'] %}
+      - "-storageNode={{ hostvars[host].ansible_host }}:8401"
+{% endfor %}
     restart: always
 
 networks:

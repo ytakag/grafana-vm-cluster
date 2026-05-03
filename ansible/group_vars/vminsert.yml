@@ -1,2 +1,2 @@
 vminsert_command:
-  - "dedup.minScrapeInterval=15s"
+  - "-dedup.minScrapeInterval=15s"

@@ -1,0 +1,2 @@
+vmauth_command:
+  - "-auth.config=/etc/auth.yml"
