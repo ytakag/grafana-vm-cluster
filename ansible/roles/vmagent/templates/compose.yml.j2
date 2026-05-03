@@ -1,0 +1,24 @@
+services:
+  vmagent:
+    image: "{{ (container_registry_repository | default('')) ~ '/' if container_registry_repository | default('') else '' }}victoriametrics/vmagent:latest"
+    container_name: vmagent
+    ports:
+      - 8429:8429
+    volumes:
+      - vmagent-data:/vmagentdata
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - "--promscrape.config=/etc/prometheus/prometheus.yml"
+{% for host in groups['vmauth-write'] %}
+{% for path in vmagent_remote_write_path %}
+      - "--remoteWrite.url=http://{{ hostvars[host].ansible_host }}:8427{{ path }}"
+{% endfor %}
+{% endfor %}
+    restart: always
+
+networks:
+  monitoring:
+    external: true
+
+volumes:
+  vmagent-data:
