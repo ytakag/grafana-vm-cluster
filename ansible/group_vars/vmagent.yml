@@ -2,4 +2,4 @@ vmagent_command:
   - "-promscrape.config=/etc/prometheus/prometheus.yml"
 
 vmagent_remote_write_path:
-  - "/insert/"
+  - "/insert/multitenant/prometheus"
