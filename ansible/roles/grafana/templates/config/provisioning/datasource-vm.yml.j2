@@ -8,5 +8,5 @@ datasources:
     # Some data sources are incompatible with any setting
     # but proxy (Server).
     access: proxy
-    url: http://{{ hostvars["vmauth-g"].ansible_host }}:8481/select/
+    url: http://{{ hostvars["vmauth-read"].ansible_host }}:8481/select/
     isDefault: true
