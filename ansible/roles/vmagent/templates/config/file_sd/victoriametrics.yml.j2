@@ -1,0 +1,41 @@
+- targets:
+{% for target in groups['vmagent'] %}
+    - {{ hostvars[target].ansible_host }}:8429
+{% endfor %}
+  labels:
+    job: vmagent
+
+- targets:
+{% for target in groups['vmauth'] %}
+    - {{ hostvars[target].ansible_host }}:8427
+{% endfor %}
+  labels:
+    job: vmauth
+
+#- targets:
+#{% for target in groups['vmalert'] %}
+#    - {{ hostvars[target].ansible_host }}:8880
+#{% endfor %}
+#  labels:
+#    job: vmalert
+
+- targets:
+{% for target in groups['vminsert'] %}
+    - {{ hostvars[target].ansible_host }}:8480
+{% endfor %}
+  labels:
+    job: vminsert
+
+- targets:
+{% for target in groups['vmselect'] %}
+    - {{ hostvars[target].ansible_host }}:8481
+{% endfor %}
+  labels:
+    job: vmselect
+
+- targets:
+{% for target in groups['vmstorage'] %}
+    - {{ hostvars[target].ansible_host }}:8482
+{% endfor %}
+  labels:
+    job: vmstorage

@@ -1,0 +1,10 @@
+global:
+  scrape_interval: {{ vmagent_scrape_interval }}
+  scrape_timeout: {{ vmagent_scrape_timeout }}
+  evaluation_interval: {{ vmagent_evaluation_interval }}
+
+scrape_configs:
+  - job_name: victoriametrics
+    file_sd_configs:
+      - files:
+          - /etc/prometheus/file_sd/victoriametrics.yml
