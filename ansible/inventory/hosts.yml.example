@@ -38,17 +38,18 @@ all:
       grafana-1:
       grafana-2:
 
-    vmauth-read:
-      vmauth-read-1:
-      vmauth-read-2:
+    vmauth:
+      children:
+        vmauth-read:
+          vmauth-read-1:
+          vmauth-read-2:
+        vmauth-write:
+          vmauth-write-1:
+          vmauth-write-2:
 
     vmselect:
       vmselect-1:
       vmselect-2:
-
-    vmauth-write:
-      vmauth-write-1:
-      vmauth-write-2:
 
     vminsert:
       vminsert-1:
