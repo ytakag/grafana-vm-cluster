@@ -25,7 +25,7 @@
   register: linger_status
   changed_when: false
 
-- name: Create  network
+- name: Create network
   containers.podman.podman_network:
     name: monitoring
 
@@ -35,8 +35,9 @@
   when: "'Linger=yes' not in linger_status.stdout"
 
 - name: Create working directory
+  become: false
   ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/{{ working_dir }}"
+    path: "/home/{{ ansible_user }}/{{ working_dir }}"
     state: directory
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
