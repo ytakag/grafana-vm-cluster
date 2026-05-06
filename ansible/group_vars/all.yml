@@ -1,2 +1,7 @@
+#ansible_user: user
+#ansible_password: password
+#ansible_become_password: password
+#ansible_ssh_private_key_file: ~/.ssh/id_rsa
+
 working_dir: monitoring
 container_registry_repository: docker.io
