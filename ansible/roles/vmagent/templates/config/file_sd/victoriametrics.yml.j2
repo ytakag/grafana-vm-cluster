@@ -1,41 +1,65 @@
 - targets:
 {% for target in groups['vmagent'] %}
+{% if target == inventory_hostname %}
+    - vmagent:8429
+{% else %}
     - {{ hostvars[target].ansible_host }}:8429
+{% endif %}
 {% endfor %}
   labels:
     job: vmagent
 
 - targets:
 {% for target in groups['vmauth'] %}
+{% if target == inventory_hostname %}
+    - vmauth:8427
+{% else %}
     - {{ hostvars[target].ansible_host }}:8427
+{% endif %}
 {% endfor %}
   labels:
     job: vmauth
 
-#- targets:
-#{% for target in groups['vmalert'] %}
-#    - {{ hostvars[target].ansible_host }}:8880
-#{% endfor %}
-#  labels:
-#    job: vmalert
+- targets:
+{% for target in groups['vmalert'] %}
+{% if target == inventory_hostname %}
+    - vmalert:8880
+{% else %}
+    - {{ hostvars[target].ansible_host }}:8880
+{% endif %}
+{% endfor %}
+  labels:
+    job: vmalert
 
 - targets:
 {% for target in groups['vminsert'] %}
+{% if target == inventory_hostname %}
+    - vminsert:8480
+{% else %}
     - {{ hostvars[target].ansible_host }}:8480
+{% endif %}
 {% endfor %}
   labels:
     job: vminsert
 
 - targets:
 {% for target in groups['vmselect'] %}
+{% if target == inventory_hostname %}
+    - vmselect:8481
+{% else %}
     - {{ hostvars[target].ansible_host }}:8481
+{% endif %}
 {% endfor %}
   labels:
     job: vmselect
 
 - targets:
 {% for target in groups['vmstorage'] %}
+{% if target == inventory_hostname %}
+    - vmstorage:8482
+{% else %}
     - {{ hostvars[target].ansible_host }}:8482
+{% endif %}
 {% endfor %}
   labels:
     job: vmstorage

@@ -11,7 +11,7 @@ services:
 {% for cmd in vmagent_command %}
       - "{{ cmd }}"
 {% endfor %}
-{% for path in vmagent_remote_write_path %}
+{% for path in vm_remote_write_path %}
       - "-remoteWrite.url=http://{{ vmauth_write_vip }}:8427{{ path }}"
 {% endfor %}
     restart: always

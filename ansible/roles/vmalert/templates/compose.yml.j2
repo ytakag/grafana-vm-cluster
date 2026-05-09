@@ -11,10 +11,18 @@ services:
       - "{{ cmd }}"
 {% endfor %}
 {% for host in groups['alertmanager'] %}
+{% if host == inventory_hostname %}
+      - "-notifier.url=http://alertmanager:9093/"
+{% else %}
       - "-notifier.url=http://{{ hostvars[host].ansible_host }}:9093/"
+{% endif %}
 {% endfor %}
-      - "-remoteRead.url=http://{{ vmauth_read_vip }}:8427/select/multitenant/prometheus"
-      - "-remoteWrite.url=http://{{ vmauth_write_vip }}:8427/insert/multitenant/prometheus"
+{% for path in vm_remote_read_path %}
+      - "-remoteRead.url=http://{{ vmauth_read_vip }}:8427{{ path }}"
+{% endfor %}
+{% for path in vm_remote_write_path %}
+      - "-remoteWrite.url=http://{{ vmauth_write_vip }}:8427{{ path }}"
+{% endfor %}
     restart: always
 
 networks:

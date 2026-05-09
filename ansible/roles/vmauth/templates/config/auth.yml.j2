@@ -10,7 +10,7 @@ unauthorized_user:
       url_prefix:
 {% if inventory_hostname in groups['vmauth-read'] %}
 {% for host in groups['vmselect'] %}
-{% if hostvars[host].ansible_host == ansible_host %}
+{% if inventory_hostname == host %}
         - "http://vmselect:8481/"
 {% else %}
         - "http://{{ hostvars[host].ansible_host }}:8481/"
@@ -18,7 +18,7 @@ unauthorized_user:
 {% endfor %}
 {% elif inventory_hostname in groups['vmauth-write'] %}
 {% for host in groups['vminsert'] %}
-{% if hostvars[host].ansible_host == ansible_host %}
+{% if host == inventory_hostname %}
         - "http://vminsert:8480/"
 {% else %}
         - "http://{{ hostvars[host].ansible_host }}:8480/"
