@@ -1,0 +1,22 @@
+services:
+  vmstorage:
+    image: "{{ (container_registry_repository | default('')) ~ '/' if container_registry_repository | default('') else '' }}victoriametrics/vmalert:latest"
+    container_name: vmalert
+    ports:
+      - 8880:8880
+    volumes:
+      - ./config:/etc/alerts
+    command:
+{% for cmd in vmalert_command %}
+      - "{{ cmd }}"
+{% endfor %}
+{% for host in groups['alertmanager'] %}
+      - "-notifier.url=http://{{ hostvars[host].ansible_host }}:9093/"
+{% endfor %}
+      - "-remoteRead.url=http://{{ vmauth_read_vip }}:8427/select/multitenant/prometheus"
+      - "-remoteWrite.url=http://{{ vmauth_write_vip }}:8427/insert/multitenant/prometheus"
+    restart: always
+
+networks:
+  monitoring:
+    external: true

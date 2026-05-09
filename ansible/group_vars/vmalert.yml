@@ -1,0 +1,2 @@
+vmalert_command:
+  - "-rule=/etc/alerts/*.yml"
