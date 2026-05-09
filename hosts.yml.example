@@ -98,3 +98,4 @@ all:
     vmstorage:
       hosts:
         vmstorage-1:
+        vmstorage-2:
