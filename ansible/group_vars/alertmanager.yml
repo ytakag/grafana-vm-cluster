@@ -1,0 +1,4 @@
+alertmanager_command:
+  - "--cluster.listen-address=0.0.0.0:9094"
+  - "--config.file=/etc/alertmanager/alertmanager.yml"
+  - "#--web.config.file=/etc/alertmanager/web.yml"
