@@ -1,8 +1,26 @@
 all:
+  vars:
+    ansible_user: user
+    ansible_password: password
+    ansible_become_password: password
+    ansible_ssh_private_key_file: ~/.ssh/id_rsa
+    vmauth_read_vip: 10.0.0.20
+    vmauth_write_vip: 10.0.0.21
+
   hosts:
     grafana-1:
       ansible_host: 10.0.0.1
     grafana-2:
+      ansible_host: 10.0.0.2
+
+    alertmanager-1:
+      ansible_host: 10.0.0.1
+    alertmanager-2:
+      ansible_host: 10.0.0.2
+
+    vmalert-1:
+      ansible_host: 10.0.0.1
+    vmalert-2:
       ansible_host: 10.0.0.2
 
     vmauth-read-1:
@@ -32,12 +50,24 @@ all:
 
     vmstorage-1:
       ansible_host: 10.0.0.9
+    vmstorage-2:
+      ansible_host: 10.0.0.10
 
   children:
     grafana:
       hosts:
         grafana-1:
         grafana-2:
+
+    alertmanager:
+      hosts:
+        alertmanager-1:
+        alertmanager-2:
+
+    vmalert:
+      hosts:
+        vmalert-1:
+        vmalert-2:
 
     vmauth:
       children:
