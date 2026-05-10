@@ -4,12 +4,22 @@
   roles:
     - container
 
-- name: Setup grafana, alertmanager, vmalert
+- name: Setup grafana
   become: true
   hosts: grafana
   roles:
     - grafana
+
+- name: Setup alertmanager
+  become: true
+  hosts: alertmanager
+  roles:
     - alertmanager
+
+- name: Setup vmalert
+  become: true
+  hosts: vmalert
+  roles:
     - vmalert
 
 - name: Setup vmauth
