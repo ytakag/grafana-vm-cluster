@@ -1,5 +1,12 @@
+- name: Create top directory
+  ansible.builtin.file:
+    path: "/home/{{ ansible_user }}/{{ working_dir }}/vmalert/config"
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: "0755"
+
 - name: Create directory
-  become: false
   ansible.builtin.file:
     path: "/home/{{ ansible_user }}/{{ working_dir }}/vmalert/{{ item.path }}"
     state: directory
@@ -8,6 +15,16 @@
     mode: "0755"
   with_filetree: "{{ role_path }}/templates"
   when: item.state == "directory"
+
+- name: Copy files
+  ansible.builtin.copy:
+    src: "{{ item.src }}"
+    dest: "/home/{{ ansible_user }}/{{ working_dir }}/vmalert/{{ item.path }}"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: "0644"
+  with_filetree: "{{ role_path }}/files"
+  when: item.state == "file"
 
 - name: Copy templates files
   become: false

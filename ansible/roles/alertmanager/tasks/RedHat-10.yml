@@ -1,7 +1,14 @@
-- name: Create directory
-  become: false
+- name: Create top directory
   ansible.builtin.file:
-    path: "/home/{{ ansible_user }}/{{ working_dir }}/vminsert/{{ item.path }}"
+    path: "/home/{{ ansible_user }}/{{ working_dir }}/alertmanager"
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: "0755"
+
+- name: Create directory
+  ansible.builtin.file:
+    path: "/home/{{ ansible_user }}/{{ working_dir }}/alertmanager/{{ item.path }}"
     state: directory
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
@@ -10,10 +17,9 @@
   when: item.state == "directory"
 
 - name: Copy templates files
-  become: false
   ansible.builtin.template:
     src: "{{ item.src }}"
-    dest: "/home/{{ ansible_user }}/{{ working_dir }}/vminsert/{{ item.path |
+    dest: "/home/{{ ansible_user }}/{{ working_dir }}/alertmanager/{{ item.path |
       regex_replace('\\.j2$', '') }}"
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
@@ -25,4 +31,4 @@
   become: false
   ansible.builtin.command:
     cmd: podman compose up -d
-    chdir: "/home/{{ ansible_user }}/{{ working_dir }}/vminsert"
+    chdir: "/home/{{ ansible_user }}/{{ working_dir }}/alertmanager"

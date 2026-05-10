@@ -4,8 +4,15 @@
     value: "{{ [grafana_port] | min }}"
     reload: true
 
+- name: Create top directory
+  ansible.builtin.file:
+    path: "/home/{{ ansible_user }}/{{ working_dir }}/grafana"
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: "0755"
+
 - name: Create directory
-  become: false
   ansible.builtin.file:
     path: "/home/{{ ansible_user }}/{{ working_dir }}/grafana/{{ item.path }}"
     state: directory
@@ -16,7 +23,6 @@
   when: item.state == "directory"
 
 - name: Copy templates files
-  become: false
   ansible.builtin.template:
     src: "{{ item.src }}"
     dest: "/home/{{ ansible_user }}/{{ working_dir }}/grafana/{{ item.path |

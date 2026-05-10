@@ -1,5 +1,12 @@
+- name: Create top directory
+  ansible.builtin.file:
+    path: "/home/{{ ansible_user }}/{{ working_dir }}/vmselect"
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: "0755"
+
 - name: Create directory
-  become: false
   ansible.builtin.file:
     path: "/home/{{ ansible_user }}/{{ working_dir }}/vmselect/{{ item.path }}"
     state: directory
@@ -10,7 +17,6 @@
   when: item.state == "directory"
 
 - name: Copy templates files
-  become: false
   ansible.builtin.template:
     src: "{{ item.src }}"
     dest: "/home/{{ ansible_user }}/{{ working_dir }}/vmselect/{{ item.path |
