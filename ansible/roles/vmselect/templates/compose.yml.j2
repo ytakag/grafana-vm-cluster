@@ -1,6 +1,6 @@
 services:
   vmselect:
-    image: "{{ (container_registry_repository | default('')) ~ '/' if container_registry_repository | default('') else '' }}victoriametrics/vmselect:latest"
+    image: {{ (container_registry_repository | default('')) ~ '/' if container_registry_repository | default('') else '' }}victoriametrics/vmselect:latest
     container_name: vmselect
     ports:
       - 8481:8481

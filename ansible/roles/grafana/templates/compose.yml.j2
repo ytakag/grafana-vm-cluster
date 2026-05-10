@@ -1,6 +1,6 @@
 services:
   grafana:
-    image: "{{ (container_registry_repository | default('')) ~ '/' if container_registry_repository | default('') else '' }}grafana/grafana-enterprise:latest"
+    image: {{ (container_registry_repository | default('')) ~ '/' if container_registry_repository | default('') else '' }}grafana/grafana-enterprise:latest
     container_name: grafana
     ports:
       - {{ grafana_port }}:3000
@@ -21,7 +21,7 @@ services:
     restart: always
 
   renderer:
-    image: "{{ (container_registry_repository | default('')) ~ '/' if container_registry_repository | default('') else '' }}grafana/grafana-image-renderer:latest
+    image: {{ (container_registry_repository | default('')) ~ '/' if container_registry_repository | default('') else '' }}grafana/grafana-image-renderer:latest
     container_name: renderer
     ports:
       - 8081:8081

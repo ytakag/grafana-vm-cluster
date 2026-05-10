@@ -1,6 +1,6 @@
 services:
   vmstorage:
-    image: "{{ (container_registry_repository | default('')) ~ '/' if container_registry_repository | default('') else '' }}victoriametrics/vmstorage:latest"
+    image: {{ (container_registry_repository | default('')) ~ '/' if container_registry_repository | default('') else '' }}victoriametrics/vmstorage:latest
     container_name: vmstorage
     ports:
       - 8400:8400

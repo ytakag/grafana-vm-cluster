@@ -1,6 +1,6 @@
 services:
   vminsert:
-    image: "{{ (container_registry_repository | default('')) ~ '/' if container_registry_repository | default('') else '' }}victoriametrics/vminsert:latest"
+    image: {{ (container_registry_repository | default('')) ~ '/' if container_registry_repository | default('') else '' }}victoriametrics/vminsert:latest
     container_name: vminsert
     ports:
       - 8480:8480
