@@ -11,7 +11,7 @@ services:
       - "{{ cmd }}"
 {% endfor %}
 {% for host in groups['alertmanager'] %}
-{% if host == inventory_hostname %}
+{% if ansible_host == hostvars[host].ansible_host %}
       - "-notifier.url=http://alertmanager:9093/"
 {% else %}
       - "-notifier.url=http://{{ hostvars[host].ansible_host }}:9093/"

@@ -9,7 +9,7 @@ services:
       - "{{ cmd }}"
 {% endfor %}
 {% for host in groups['vmstorage'] %}
-{% if host == inventory_hostname %}
+{% if ansible_host == hostvars[host].ansible_host %}
       - "-storageNode=vmstorage:8401"
 {% else %}
       - "-storageNode={{ hostvars[host].ansible_host }}:8401"

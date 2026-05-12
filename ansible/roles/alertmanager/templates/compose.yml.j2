@@ -14,7 +14,7 @@ services:
       - "{{ cmd }}"
 {% endfor %}
 {% for host in groups['alertmanager'] %}
-{% if host != inventory_hostname %}
+{% if ansible_host != hostvars[host].ansible_host %}
       - "--cluster.peer={{ hostvars[host].ansible_host }}:9094"
 {% endif %}
 {% endfor %}

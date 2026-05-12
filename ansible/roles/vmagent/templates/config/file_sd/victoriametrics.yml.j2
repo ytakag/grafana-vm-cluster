@@ -1,6 +1,6 @@
 - targets:
 {% for target in groups['vmagent'] %}
-{% if target == inventory_hostname %}
+{% if ansible_host == hostvars[target].ansible_host %}
     - vmagent:8429
 {% else %}
     - {{ hostvars[target].ansible_host }}:8429
@@ -11,7 +11,7 @@
 
 - targets:
 {% for target in groups['vmauth'] %}
-{% if target == inventory_hostname %}
+{% if ansible_host == hostvars[target].ansible_host %}
     - vmauth:8427
 {% else %}
     - {{ hostvars[target].ansible_host }}:8427
@@ -22,7 +22,7 @@
 
 - targets:
 {% for target in groups['vmalert'] %}
-{% if target == inventory_hostname %}
+{% if ansible_host == hostvars[target].ansible_host %}
     - vmalert:8880
 {% else %}
     - {{ hostvars[target].ansible_host }}:8880
@@ -33,7 +33,7 @@
 
 - targets:
 {% for target in groups['vminsert'] %}
-{% if target == inventory_hostname %}
+{% if ansible_host == hostvars[target].ansible_host %}
     - vminsert:8480
 {% else %}
     - {{ hostvars[target].ansible_host }}:8480
@@ -44,7 +44,7 @@
 
 - targets:
 {% for target in groups['vmselect'] %}
-{% if target == inventory_hostname %}
+{% if ansible_host == hostvars[target].ansible_host %}
     - vmselect:8481
 {% else %}
     - {{ hostvars[target].ansible_host }}:8481
@@ -55,7 +55,7 @@
 
 - targets:
 {% for target in groups['vmstorage'] %}
-{% if target == inventory_hostname %}
+{% if ansible_host == hostvars[target].ansible_host %}
     - vmstorage:8482
 {% else %}
     - {{ hostvars[target].ansible_host }}:8482
