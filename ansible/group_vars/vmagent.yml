@@ -1,2 +1,4 @@
+deploy_dir: vmagent
+
 vmagent_command:
   - "-promscrape.config=/etc/prometheus/prometheus.yml"

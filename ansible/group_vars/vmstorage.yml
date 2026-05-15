@@ -1,3 +1,5 @@
+deploy_dir: vmstorage
+
 vmstorage_command:
   - "-storageDataPath=/storage"
   - "-dedup.minScrapeInterval=15s"

@@ -1,6 +1,6 @@
 - name: Create top directory
   ansible.builtin.file:
-    path: "/home/{{ ansible_user }}/{{ working_dir }}/vmselect"
+    path: "/home/{{ ansible_user }}/{{ working_dir }}/{{ deploy_dir }}"
     state: directory
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
@@ -8,7 +8,8 @@
 
 - name: Create directory
   ansible.builtin.file:
-    path: "/home/{{ ansible_user }}/{{ working_dir }}/vmselect/{{ item.path }}"
+    path: "/home/{{ ansible_user }}/{{ working_dir }}/{{ deploy_dir }}/{{ item.path
+      }}"
     state: directory
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
@@ -19,8 +20,8 @@
 - name: Copy templates files
   ansible.builtin.template:
     src: "{{ item.src }}"
-    dest: "/home/{{ ansible_user }}/{{ working_dir }}/vmselect/{{ item.path |
-      regex_replace('\\.j2$', '') }}"
+    dest: "/home/{{ ansible_user }}/{{ working_dir }}/{{ deploy_dir }}/{{ item.path
+      | regex_replace('\\.j2$', '') }}"
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
     mode: "0644"
@@ -31,4 +32,4 @@
   become: false
   ansible.builtin.command:
     cmd: podman compose up -d
-    chdir: "/home/{{ ansible_user }}/{{ working_dir }}/vmselect"
+    chdir: "/home/{{ ansible_user }}/{{ working_dir }}/{{ deploy_dir }}"

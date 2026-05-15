@@ -1,2 +1,4 @@
+deploy_dir: vmalert
+
 vmalert_command:
   - "-rule=/etc/alerts/*.yml"

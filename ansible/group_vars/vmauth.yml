@@ -1,2 +1,4 @@
+deploy_dir: vmauth
+
 vmauth_command:
   - "-auth.config=/etc/auth.yml"
