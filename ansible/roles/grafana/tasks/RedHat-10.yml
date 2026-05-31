@@ -14,7 +14,8 @@
 
 - name: Create directory
   ansible.builtin.file:
-    path: "/home/{{ ansible_user }}/{{ working_dir }}/{{ deploy_dir }}/{{ item.path
+    path:
+      "/home/{{ ansible_user }}/{{ working_dir }}/{{ deploy_dir }}/{{ item.path
       }}"
     state: directory
     owner: "{{ ansible_user }}"
@@ -23,16 +24,16 @@
   with_filetree: "{{ role_path }}/templates"
   when: item.state == "directory"
 
-- name: Copy templates files
+- name: Generate datasource config per vm_remote_read_path
   ansible.builtin.template:
-    src: "{{ item.src }}"
-    dest: "/home/{{ ansible_user }}/{{ working_dir }}/{{ deploy_dir }}/{{ item.path
-      | regex_replace('\\.j2$', '') }}"
+    src: "templates/config/provisioning/datasources/datasource-vm.yml.j2"
+    dest: "/home/{{ ansible_user }}/{{ working_dir }}/{{ deploy_dir }}/config/provisioning/datasources/{{ read_path | regex_replace('^/', '') | regex_replace('/', '_') }}_datasources.yml"
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
     mode: "0644"
-  with_filetree: "{{ role_path }}/templates"
-  when: item.state == "file"
+  loop: "{{ vm_remote_read_path }}"
+  loop_control:
+    loop_var: read_path
 
 - name: Start podman compose
   become: false
