@@ -4,5 +4,5 @@ datasources:
   - name: VictoriaMetrics - cluster
     type: victoriametrics-metrics-datasource
     access: proxy
-    url: http://{{ vmauth_read_vip }}:8481{{ vm_remote_read_path }}
+    url: http://{{ vmauth_read_vip }}:8427{{ read_path }}
     isDefault: true
