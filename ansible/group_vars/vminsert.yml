@@ -1,4 +1,4 @@
 deploy_dir: vminsert
 
 vminsert_command:
-  - "-dedup.minScrapeInterval=15s"
+  - "-replicationFactor=1"
