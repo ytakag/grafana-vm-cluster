@@ -1,58 +1,59 @@
-#- name: Install container tools and create directory
-#become: true
-#hosts: all
-#roles:
-#- container
+- name: Install container tools and create directory
+  become: true
+  hosts: all
+  roles:
+    - container
 
-#- name: Setup grafana
-#become: true
-#hosts: grafana
-#roles:
-#- grafana
+- name: Setup grafana
+  become: true
+  hosts: grafana
+  roles:
+    - grafana
 
-#- name: Setup alertmanager
-#become: true
-#hosts: alertmanager
-#roles:
-#- alertmanager
+- name: Setup alertmanager
+  become: true
+  hosts: alertmanager
+  roles:
+    - alertmanager
 
-#- name: Setup vmalert
-#become: true
-#hosts: vmalert
-#roles:
-#- vmalert
+- name: Setup vmalert
+  become: true
+  hosts: vmalert
+  roles:
+    - vmalert
 
-#- name: Setup vmselect
-#become: true
-#hosts: vmselect
-#roles:
-#- vmselect
+- name: Setup vmselect
+  become: true
+  hosts: vmselect
+  roles:
+    - vmselect
 
-#- name: Setup vminsert
-#become: true
-#hosts: vminsert
-#roles:
-#- vminsert
+- name: Setup vminsert
+  become: true
+  hosts: vminsert
+  roles:
+    - vminsert
 
-#- name: Setup vmauth
-#become: true
-#hosts: vmauth-read:vmauth-write
-#roles:
-#- vmauth
+- name: Setup vmauth
+  become: true
+  hosts: vmauth-read:vmauth-write
+  roles:
+    - vmauth
 
 - name: Setup vmagent
   become: true
   hosts: vmagent
   roles:
     - vmagent
-#- name: Setup vmstorage
-#become: true
-#hosts: vmstorage
-#roles:
-#- vmstorage
 
-#- name: Setup keepalived
-#become: true
-#hosts: vmauth-read:vmauth-write
-#roles:
-#- keepalived
+- name: Setup vmstorage
+  become: true
+  hosts: vmstorage
+  roles:
+    - vmstorage
+
+- name: Setup keepalived
+  become: true
+  hosts: vmauth-read:vmauth-write
+  roles:
+    - keepalived

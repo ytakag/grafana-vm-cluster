@@ -4,30 +4,20 @@
       - keepalived
     state: present
 
-- name: Enable and start services
-  ansible.builtin.systemd_service:
-    name: "{{ item }}"
-    enabled: true
-    state: started
+- name: Copy templates files
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "root"
+    group: "root"
+    mode: "{{ item.mode }}"
   loop:
-    - keepalived
-
-- name: Deploy keepalived configuration
-  ansible.builtin.template:
-    src: keepalived.conf.j2
-    dest: /etc/keepalived/keepalived.conf
-    owner: root
-    group: root
-    mode: "0644"
-  notify: Restart keepalived
-
-- name: Deploy check script
-  ansible.builtin.template:
-    src: check_vmauth.sh.j2
-    dest: /usr/local/bin/check_vmauth.sh
-    owner: root
-    group: root
-    mode: "0755"
+    - src: "keepalived.conf.j2"
+      dest: "/etc/keepalived/keepalived.conf"
+      mode: "0644"
+    - src: "check_vmauth.sh.j2"
+      dest: "/usr/local/bin/check_vmauth.sh"
+      mode: "0755"
   notify: Restart keepalived
 
 - name: Enable and start keepalived services

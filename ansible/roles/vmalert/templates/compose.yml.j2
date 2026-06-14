@@ -18,6 +18,7 @@ services:
 {% endif %}
 {% endfor %}
 {% for path in vm_remote_read_path %}
+      - "-datasource.url=http://{{ vmauth_read_vip }}:8427{{ path }}"
       - "-remoteRead.url=http://{{ vmauth_read_vip }}:8427{{ path }}"
 {% endfor %}
 {% for path in vm_remote_write_path %}

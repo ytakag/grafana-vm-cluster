@@ -1,31 +1,24 @@
-- name: Create top directory
-  ansible.builtin.file:
-    path: "/home/{{ ansible_user }}/{{ working_dir }}/{{ deploy_dir }}"
-    state: directory
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
-    mode: "0755"
-
 - name: Create directory
   ansible.builtin.file:
-    path: "/home/{{ ansible_user }}/{{ working_dir }}/{{ deploy_dir }}/{{ item.path
-      }}"
+    path: "{{ item }}"
     state: directory
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
     mode: "0755"
-  with_filetree: "{{ role_path }}/templates"
-  when: item.state == "directory"
-  notify: Start/Recreate podman compose
+  loop:
+    - "/home/{{ ansible_user }}/{{ working_dir }}/{{ deploy_dir }}/config"
+  notify: Start/Recreate podman composee
 
 - name: Copy templates files
   ansible.builtin.template:
     src: "{{ item.src }}"
-    dest: "/home/{{ ansible_user }}/{{ working_dir }}/{{ deploy_dir }}/{{ item.path
-      | regex_replace('\\.j2$', '') }}"
+    dest: "/home/{{ ansible_user }}/{{ working_dir }}/{{ deploy_dir }}/{{ item.dest }}"
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
     mode: "0644"
-  with_filetree: "{{ role_path }}/templates"
-  when: item.state == "file"
+  loop:
+    - src: "compose.yml.j2"
+      dest: "compose.yml"
+    - src: "config/auth.yml.j2"
+      dest: "config/auth.yml"
   notify: Start/Recreate podman compose
