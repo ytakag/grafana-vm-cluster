@@ -1,0 +1,23 @@
+#!/bin/bash
+
+{% if inventory_hostname in groups['vmauth-read'] %}
+URL="http://127.0.0.1:8427/select/multitenant/prometheus/api/v1/query"
+HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" \
+  --max-time 2 \
+  --get \
+  --data-urlencode "query=up" \
+  "$URL")
+{% elif inventory_hostname in groups['vmauth-write'] %}
+URL="http://127.0.0.1:8427/insert/0/prometheus/api/v1/write"
+HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" \
+  --max-time 2 \
+  "$URL")
+{% endif %}
+
+if [ "$HTTP_CODE" = "200" ] || [ "$HTTP_CODE" = "204" ]; then
+  echo "OK: vmauth to vmstorage connection is successful. (HTTP ${HTTP_CODE})"
+  exit 0
+else
+  echo "CRITICAL: Connection failed or component is down. (HTTP ${HTTP_CODE})"
+  exit 1
+fi
