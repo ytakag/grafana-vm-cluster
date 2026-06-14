@@ -2,7 +2,7 @@ working_dir: monitoring
 container_registry_repository: docker.io
 
 vm_remote_write_path:
-  - /insert/multitenant/prometheus
+  - /insert/multitenant/prometheus/api/v1/write
 
 vm_remote_read_path:
   - /select/multitenant/prometheus

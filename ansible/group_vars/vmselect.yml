@@ -1,4 +1,4 @@
 deploy_dir: vmselect
 
 vmselect_command:
-  - "#-vmalert.proxyURL=http://vmalert:8880"
+  - "-vmalert.proxyURL=http://vmalert:8880"

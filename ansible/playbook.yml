@@ -22,12 +22,6 @@
   roles:
     - vmalert
 
-- name: Setup vmauth
-  become: true
-  hosts: vmauth-read:vmauth-write
-  roles:
-    - vmauth
-
 - name: Setup vmselect
   become: true
   hosts: vmselect
@@ -40,6 +34,12 @@
   roles:
     - vminsert
 
+- name: Setup vmauth
+  become: true
+  hosts: vmauth-read:vmauth-write
+  roles:
+    - vmauth
+
 - name: Setup vmagent
   become: true
   hosts: vmagent
@@ -51,3 +51,9 @@
   hosts: vmstorage
   roles:
     - vmstorage
+
+- name: Setup keepalived
+  become: true
+  hosts: vmauth-read:vmauth-write
+  roles:
+    - keepalived

@@ -15,6 +15,7 @@
     mode: "0755"
   with_filetree: "{{ role_path }}/templates"
   when: item.state == "directory"
+  notify: Start/Recreate podman compose
 
 - name: Create template directories
   ansible.builtin.file:
@@ -25,6 +26,7 @@
     mode: "0755"
   with_filetree: "{{ role_path }}/templates"
   when: item.state == "directory"
+  notify: Start/Recreate podman compose
 
 - name: Copy templates files
   ansible.builtin.template:
@@ -37,9 +39,4 @@
     mode: "0644"
   with_filetree: "{{ role_path }}/templates"
   when: item.state == "file"
-
-- name: Start podman compose
-  become: false
-  ansible.builtin.command:
-    cmd: podman compose up -d
-    chdir: "/home/{{ ansible_user }}/{{ working_dir }}/{{ deploy_dir }}"
+  notify: Start/Recreate podman compose

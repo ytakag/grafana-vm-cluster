@@ -1,0 +1,6 @@
+- name: Start/Recreate podman compose
+  become: false
+  ansible.builtin.command:
+    cmd: podman compose up -d --force-recreate --pull-always
+    chdir: "/home/{{ ansible_user }}/{{ working_dir }}/{{ deploy_dir }}"
+  when: ansible_facts['distribution'] == "RedHat"
