@@ -6,7 +6,7 @@ services:
       - 8429:8429
     volumes:
       - vmagent-data:/vmagentdata
-      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./config/:/etc/prometheus/
     command:
 {% for cmd in vmagent_command %}
       - "{{ cmd }}"
